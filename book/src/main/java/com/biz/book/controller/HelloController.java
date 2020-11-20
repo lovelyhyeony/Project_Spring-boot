@@ -1,5 +1,6 @@
 package com.biz.book.controller;
 
+import com.biz.book.domain.BookVO;
 import com.biz.book.service.BookService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -33,8 +34,8 @@ public class HelloController {
 
     @RequestMapping(value = "/car")
     public String car(Model model) {
-        String[] car = new String[]{"소나타", "그랜저", "페라리", "람보르기니"};
-        model.addAttribute("CAR", car);
+        BookVO bookVO = BookVO.builder().title("자바야 놀자").author("홍길동").comp("우리동네 서점").build();
+        model.addAttribute("BOOK", bookVO);
         return "list_ex";
     }
 
