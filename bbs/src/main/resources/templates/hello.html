@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<th:block th:include="head"/>
+</head>
+<body>
+<header class="jumbotron bg-dark text-white text-center">
+	<h2>MARIMO HOME</h2>
+	<p>마리모의 홈페이지에 온걸 환영행~~</p>
+</header>
+<section>
+	<h2>thymeleaf 예제</h2>
+	<p th:text="${username}">사용자이름</p>
+	<p th:text="${tel}">전화번호</p>
+</section>
+<th:block th:include="footer"/>
+</body>
+</html>
