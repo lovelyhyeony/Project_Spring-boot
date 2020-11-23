@@ -19,10 +19,10 @@ public class HelloController {
         this.bookService = bookService;
     }
 
-    @ResponseBody
+//    @ResponseBody
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String hello() {
-        return "Hello Spring-boot Web Application Server :)";
+        return "Home";
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)

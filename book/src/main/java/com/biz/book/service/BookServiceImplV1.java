@@ -2,6 +2,9 @@ package com.biz.book.service;
 
 import com.biz.book.domain.BookVO;
 import com.biz.book.persistence.BookRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,5 +69,14 @@ public class BookServiceImplV1 implements BookService {
     public int delete(Long id) {
         bookRepository.deleteById(id);
         return 0;
+    }
+
+    @Override
+    public Page<BookVO> pageSelect(Pageable pageable) {
+        // pagination의 페이지 번호를 클릭했을 때 데이터를 가져오기 쉽도록 index 값을 변화
+        // getPageNumber 값을 0부터 시작하도록
+        int page = pageable.getPageNumber() == 0 ? 0 : pageable.getPageNumber() - 1;
+        pageable = PageRequest.of(page,10); // 한페이지의 열개만 보여주라(내가 클릭한 페이지에서 열개)
+        return bookRepository.findAll(pageable); // 다오한테 말해서 db에서 데이터 10개만 뽑은 다음에 컨트롤러에 넘어감
     }
 }

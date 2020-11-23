@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<th:block th:include="header"/>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         document.querySelector("#btn-save").addEventListener("click", function (e) {
@@ -31,41 +26,81 @@
             // 작동하지않을 때 사용
             e.preventDefault();
 
-            const tilte = document.querySelector("#title").value;
-            const author = document.querySelector("#author").value;
-            const comp = document.querySelector("#comp").value;
-            const price = document.querySelector("#price").value;
+            const tilte = document.querySelector("#title");
+            const author = document.querySelector("#author");
+            const comp = document.querySelector("#comp");
+            const price = document.querySelector("#price");
 
-            if(tilte===""){
+            if (tilte.value === "") {
                 alert("도서명을 입력해주세여 ! :(")
+                tilte.focus();
                 return false;
             }
-
+            if (author.value === "") {
+                alert("저자명을 입력해주세여 ! :(")
+                author.focus();
+                return false;
+            }
+            /**
+             * VO의 숫자형필드의 경우
+             * 값이 비어있는 채로 서버로 submit이 되면
+             * 400오류가 발생한다.
+             * 400 오류는 컨트롤러에서 아직 Catch하지 못하므로
+             * 가급적 front에서 유효성 검사를 해주는 것이 좋다.
+             */
+            // 가격에 아무것도 입력이 안됐으면
+            if (!price.value) {
+                alert("가격은 0보다 반드시 큰 값을 입력해야 합니당 ! :(")
+                price.focus();
+                return false;
+            }
+            // 유효성 검사가 모두 완료되면 서버로 데이터를 전송
+            document.querySelector("form").submit();
             return false;
         })
     })
 </script>
-<body>
-<form method="post">
+<style>
+    form#input-form {
+        width: 80%;
+        margin: 10px auto;
+    }
+
+    form#input-form div {
+        display: flex;
+    }
+
+    form#input-form label {
+        flex: 1;
+        text-align: right;
+        margin: 5px;
+        padding: 8px;
+    }
+
+    form#input-form input {
+        flex: 3;
+        margin: 5px;
+        padding: 8px;
+    }
+</style>
+<form method="POST" id="input-form" th:object="${BOOK}">
     <div>
         <label>도서명</label>
-        <input name="title" id="title">
+        <input name="title" id="title" th:value="*{title}"/>
     </div>
     <div>
         <label>저자</label>
-        <input name="author" id="author">
+        <input name="author" id="author" th:value="*{author}"/>
     </div>
     <div>
         <label>출판사</label>
-        <input name="comp" id="comp">
+        <input name="comp" id="comp" th:value="*{comp}"/>
     </div>
     <div>
         <label>가격</label>
-        <input name="price" id="price">
+        <input name="price" id="price" th:value="*{price}"/>
     </div>
     <div>
-        <input type="submit" id="btn-save" value="저장">
+        <input type="submit" id="btn-save" value="저장"/>
     </div>
 </form>
-</body>
-</html>
