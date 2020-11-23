@@ -30,16 +30,21 @@ public class BookController {
     }
 
     @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public String view(String id, Model model){
+    public String view(String id, Model model) {
         BookVO bookVO = bookService.findById(Long.valueOf(id));
-        model.addAttribute("BOOK",bookVO);
+        model.addAttribute("BOOK", bookVO);
         return "book/view";
     }
 
     @RequestMapping(value = "/delete/{id}")
-    public String delete(@PathVariable("id") String id){
+    public String delete(@PathVariable("id") String id) {
         bookService.delete(Long.valueOf(id));
         return "redirect:/book/list";
+    }
+
+    @RequestMapping(value = "/insert", method = RequestMethod.GET)
+    public String insert() {
+        return "book/input";
     }
 
 }
